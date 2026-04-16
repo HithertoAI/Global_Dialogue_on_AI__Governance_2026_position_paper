@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sovereignty as an Architectural Choice — 2026 Global Dialogue on AI Governance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --crimson: #8B1A1A;
+      --crimson-light: #A52020;
+      --crimson-dark: #5C1010;
+      --ink: #1a1410;
+      --parchment: #F4F0E8;
+      --parchment-dark: #E8E3D8;
+      --warm-white: #FAF8F4;
+      --rule: #C8BFB0;
+      --accent-bar: 4px solid var(--crimson);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: var(--warm-white);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background-color: var(--crimson-dark);
+      color: var(--parchment);
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.025) 60px,
+        rgba(255,255,255,0.025) 61px
+      );
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(244,240,232,0.55);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--parchment);
+      margin-bottom: 1.2rem;
+    }
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(244,240,232,0.75);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      border-left: 3px solid rgba(244,240,232,0.3);
+      padding-left: 1.2rem;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(244,240,232,0.55);
+    }
+    .hero-meta-item strong {
+      display: block;
+      color: var(--parchment);
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    /* ── LAYOUT ── */
+    .content-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── NAV / TOC ── */
+    .toc {
+      background: var(--parchment);
+      border-left: var(--accent-bar);
+      padding: 2rem 2.5rem;
+      margin: 3.5rem 0;
+    }
+    .toc-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 1rem;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 2rem;
+    }
+    @media (max-width: 560px) { .toc ol { grid-template-columns: 1fr; } }
+    .toc li {
+      counter-increment: toc-counter;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .toc li::before {
+      content: counter(toc-counter, upper-roman);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--crimson);
+      flex-shrink: 0;
+    }
+    .toc a {
+      font-size: 0.88rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--rule);
+      transition: color 0.2s;
+    }
+    .toc a:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
+
+    /* ── SECTIONS ── */
+    section {
+      margin: 4rem 0;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--crimson);
+      text-transform: uppercase;
+      padding-top: 0.55rem;
+      flex-shrink: 0;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--crimson-dark);
+      line-height: 1.2;
+      border-bottom: 2px solid var(--parchment-dark);
+      padding-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 1.1rem; color: #2a2420; }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      border-left: var(--accent-bar);
+      background: var(--parchment);
+      padding: 1.4rem 1.8rem;
+      margin: 2rem 0;
+    }
+    .callout-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 0.6rem;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.95rem; }
+
+    /* ── NUMBERED ITEMS ── */
+    .item-list { margin: 1.5rem 0; }
+    .item {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0 1rem;
+      margin-bottom: 1.5rem;
+      align-items: start;
+    }
+    .item-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--parchment-dark);
+      line-height: 1;
+      padding-top: 0.15rem;
+      text-align: right;
+    }
+    .item-body strong {
+      display: block;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      color: var(--crimson-dark);
+      margin-bottom: 0.3rem;
+    }
+    .item-body p { margin-bottom: 0; font-size: 0.95rem; }
+
+    /* ── PILL TAGS ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      background: var(--crimson-dark);
+      color: var(--parchment);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+    }
+
+    /* ── STAT HIGHLIGHT ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--parchment-dark);
+      margin: 2rem 0;
+      border: 1px solid var(--parchment-dark);
+    }
+    .stat {
+      background: var(--warm-white);
+      padding: 1.4rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--crimson);
+      display: block;
+    }
+    .stat-desc {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+
+    /* ── DIVIDER ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 3rem 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--crimson-dark);
+      color: rgba(244,240,232,0.6);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+    footer a { color: rgba(244,240,232,0.8); text-decoration: none; }
+    footer a:hover { color: var(--parchment); }
+
+    /* ── SCROLL PROGRESS ── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: var(--crimson);
+      width: 0%;
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    @media print {
+      #progress { display: none; }
+      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-label">Position Paper &nbsp;·&nbsp; 2026 Global Dialogue on AI Governance &nbsp;·&nbsp; Geneva, July 2026</p>
+    <h1>Sovereignty as an<br>Architectural Choice</h1>
+    <p class="hero-sub">Replacing policy-heavy 'finger-wagging' with the technical teeth of architectural enforcement to secure global sovereignty, clinical integrity, and shared reciprocity in the AI era.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <strong>Author</strong>
+        R. Verity Vabolis
+      </div>
+      <div class="hero-meta-item">
+        <strong>Organisation</strong>
+        Hitherto AI · Flux Hall Academy · Fathom Lab
+      </div>
+      <div class="hero-meta-item">
+        <strong>Contact</strong>
+        <a href="mailto:verity@hithertoai.org" style="color:rgba(244,240,232,0.75)">verity@hithertoai.org</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="content-wrap">
+
+  <!-- TOC -->
+  <nav class="toc" aria-label="Table of contents">
+    <p class="toc-title">Contents</p>
+    <ol>
+      <li><a href="#exec-summary">Executive Summary</a></li>
+      <li><a href="#successful-dialogue">What is a Successful Dialogue?</a></li>
+      <li><a href="#narrowing-priorities">Narrowing Priorities</a></li>
+      <li><a href="#emerging-issues">Emerging Issues at Hand</a></li>
+      <li><a href="#impact">Impact of Governance Proper</a></li>
+      <li><a href="#impact2">Impact of Governance Proper (cont.)</a></li>
+      <li><a href="#added-value">The Added Value of the Dialogue</a></li>
+      <li><a href="#multi-stakeholder">Multi-Stakeholder Considerations</a></li>
+      <li><a href="#underrepresented">Underrepresented Voices</a></li>
+      <li><a href="#innovative">Innovative Engagement</a></li>
+      <li><a href="#solutions">Concrete Solutions</a></li>
+    </ol>
+  </nav>
+
+  <!-- I -->
+  <section id="exec-summary">
+    <div class="section-header">
+      <span class="section-number">I</span>
+      <h2>Executive Summary</h2>
+    </div>
+    <p>Current international AI governance efforts frequently stall at the level of high-level ethics and "policy promises." This position paper advocates for a paradigm shift toward <strong>Architectural Enforcement</strong> — the embedding of safety, privacy, and sovereignty directly into the technical fabric of AI infrastructure.</p>
+    <p>By moving away from subjective "finger-wagging" and toward objective, measurable technical controls, we can ensure that the rapid evolution of digital technologies supports human rights and international law by default.</p>
+    <div class="tags">
+      <span class="tag">Architectural Enforcement</span>
+      <span class="tag">Digital Sovereignty</span>
+      <span class="tag">Stateless-by-Design</span>
+      <span class="tag">Partitioned Intelligence</span>
+      <span class="tag">Technical Literacy Minimums</span>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- II -->
+  <section id="successful-dialogue">
+    <div class="section-header">
+      <span class="section-number">II</span>
+      <h2>What is a Successful Dialogue?</h2>
+    </div>
+    <p>To make the first Global Dialogue a success, the outcome must move beyond "governance by vibes" and toward Architectural Enforcement. If we leave Geneva with only a list of high-level principles and no technical blueprints, we haven't governed; we've merely "cosplayed."</p>
+    <p>A successful dialogue would achieve three concrete outcomes:</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">01</div>
+        <div class="item-body">
+          <strong>Mandatory Technical Standards for High-Risk Domains</strong>
+          <p>The Dialogue must transition from "Policy Promises" to identifying specific "priority actions." Success means establishing an international commitment to Partitioned Architecture in life-critical sectors like medicine. We must decouple "Medical Truth" from the hallucinations of General Knowledge Models (GKMs) currently used by over 400,000 physicians.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">02</div>
+        <div class="item-body">
+          <strong>Validation of Stateless Infrastructure</strong>
+          <p>A key "practical lesson" would be the adoption of "Stateless-by-Design" protocols, such as the Bauta Valve. By making the retention of patient/citizen PII mathematically impossible, we move privacy from a legal debate to a technical certainty.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">03</div>
+        <div class="item-body">
+          <strong>Sustainable Modernization for the Global South</strong>
+          <p>To truly "bridge AI divides," the Dialogue must validate data-sovereignty models. Success looks like a global framework for anonymized data-licensing, allowing developing nations to fund their own infrastructure rather than relying on external aid.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">Imperative</p>
+      <p>The Dialogue must mandate Technical Literacy Minimums (TLM) for oversight bodies. "Robust human oversight" is an illusion if the humans in charge cannot define or verify measurable thresholds. We advocate for the mandatory integration of Deterministic Remediation Protocols and Multi-Temporal Performance Baselines as non-negotiable architectural prerequisites.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- III -->
+  <section id="narrowing-priorities">
+    <div class="section-header">
+      <span class="section-number">III</span>
+      <h2>Narrowing Priorities</h2>
+    </div>
+    <p>In Safe AI and Human Oversight, we advocate for Technical Literacy Minimums (TLM) for the humans tasked with governance. Oversight is an illusion without competence; governance professionals must be equipped to identify and verify measurable controls like Automated System Integrity Gates, Deterministic Remediation Protocols, and Multi-Temporal Performance Baselines — instead of finger pointing and report writing.</p>
+    <p>Through <strong>Flux Hall Academy</strong>, we address Capacity-building by modernizing the delivery of technical education. We advocate for a global shift toward high-engagement, domain-specific learning frameworks that respect the expertise of adult learners. This model moves beyond basic vocabulary to actual system mastery, enabling local stakeholders to manage their own Partitioned/Moded Intelligence systems.</p>
+    <p>Regarding Societal Implications, we focus on bridging the "Integrity Gap" in high-risk domains like medicine. By deploying Stateless-by-Design infrastructure like the Bauta Valve, we ensure that "Medical Truth" is decoupled from the hallucinations of general-purpose engines, protecting both patient safety and cultural context.</p>
+    <p>Finally, we promote <strong>Digital Sovereignty for the Global South.</strong> By combining modernized adult-learning frameworks with anonymized data-licensing, nations can fund and operate their own infrastructure. Our goal is to provide a scalable blueprint for Inclusive Modernization where international cooperation is based on shared technical competence and standard-driven enforcement.</p>
+  </section>
+
+  <hr>
+
+  <!-- IV -->
+  <section id="emerging-issues">
+    <div class="section-header">
+      <span class="section-number">IV</span>
+      <h2>Emerging Issues at Hand</h2>
+    </div>
+    <p>We identify five critical cross-cutting issues that require urgent integration into the Global Dialogue:</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">1</div>
+        <div class="item-body">
+          <strong>Minimum Standards for Public-Facing Technology</strong>
+          <p>Current governance is reactive. We must establish "pre-deployment minimums" that ensure any technology reaching the public has passed rigorous, non-optional safety thresholds. Safety cannot be a "feature" added post-launch; it must be an architectural prerequisite.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">2</div>
+        <div class="item-body">
+          <strong>Standards for Certifying Bodies</strong>
+          <p>To eliminate "governance by vibes," we must establish meaningful minimum standards for the entities that certify technology and professionals. A certification is meaningless if the "expert" cannot demonstrate a post-audit methodology or identify technical controls. We propose a move toward Competency-Based Certification for governance practitioners.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">3</div>
+        <div class="item-body">
+          <strong>Diverse Technical Evolution</strong>
+          <p>We must move beyond "Data Gluttony." The current paradigm, focused almost exclusively on Transformers and neural networks, is not the "end-all" of intelligence. Governance must protect and fund research into alternative architectures that do not rely on mass extraction of earth's resources or data.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">4</div>
+        <div class="item-body">
+          <strong>Intentional Scaling (Safety Over Speed)</strong>
+          <p>We advocate for the "Everything-By-Default" (EBD) standard, where safety, privacy, and auditability are non-negotiable defaults rather than optional toggles. This involves a conscious choice to limit speed and scale in favor of clinical and societal safety.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">5</div>
+        <div class="item-body">
+          <strong>Neutral Party Liaisons</strong>
+          <p>We propose the introduction of technical experts who facilitate high-friction cooperation between ministries or nations. These parties focus solely on the science and handling of tech, ensuring that geopolitical friction doesn't stall modernization or safety implementation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- V -->
+  <section id="impact">
+    <div class="section-header">
+      <span class="section-number">V</span>
+      <h2>Impact of Governance Proper</h2>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-value">400K+</span>
+        <p class="stat-desc">Physicians using consumer-grade AI for life-critical diagnostics</p>
+      </div>
+      <div class="stat">
+        <span class="stat-value">34–41%</span>
+        <p class="stat-desc">Accuracy of GKMs in complex clinical reasoning (Stanford/Microsoft)</p>
+      </div>
+      <div class="stat">
+        <span class="stat-value">80%</span>
+        <p class="stat-desc">Population share that distrusts government with personal data in some regions</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">Significant Challenge — The Clinical Integrity Gap</p>
+      <p>Currently, over 400,000 physicians utilize consumer-grade General Knowledge Models (GKMs) for life-critical diagnostics. Research (Stanford/Microsoft) reveals accuracy as low as 34–41% in complex clinical reasoning, despite high USMLE scores. This "Integrity Gap" is a structural failure of current governance: we are treating medical decision-support as a consumer convenience rather than Digital Public Infrastructure (DPI).</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">Significant Opportunity — Architectural Enforcement</p>
+      <p>The most significant advance is the shift toward Architectural Enforcement through Stateless-by-Design protocols and Partitioned Intelligence. By using infrastructure like the Bauta Valve, we can move safety from a policy promise to a technical mandate, ensuring zero-persistence of PII and decoupling "Medical Truth" from generalist hallucinations.</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">Inclusive Modernization and Sovereignty</p>
+      <p>In developing regions, specifically Africa, there is a transformative opportunity for Digital Sovereignty. Rather than relying on external aid or debt, nations can fund their own infrastructure by anonymizing and licensing data. We advocate for an "Everything-By-Default" (EBD) standard where safety and auditability are non-negotiable architectural defaults. In 2026 anything less is an indication of carelessness, laziness, or greed.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- VI -->
+  <section id="impact2">
+    <div class="section-header">
+      <span class="section-number">VI</span>
+      <h2>Impact of Governance Proper (cont.)</h2>
+    </div>
+    <p>The Global Dialogue must transition international cooperation from high-level rhetoric to Architectural Enforcement. Its most vital role is to catalyze a global shift toward Sovereignty and Autonomy, ensuring that those currently perceived as "behind" can reach parity with those perceived as "ahead."</p>
+    <p>To achieve this, the Dialogue must facilitate three practical pillars:</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Institutionalizing Neutral Party Liaisons</strong>
+          <p>By deploying technical intermediaries to reduce friction between nations, the Dialogue ensures that modernization continues based on science and handling, rather than geopolitical agendas. This provides the "connective tissue" for a multipolar technological landscape.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Standardizing Technical Literacy Minimums (TLM)</strong>
+          <p>Robust human oversight is an illusion without competence. The Dialogue should establish minimum competency standards that empower oversight bodies to verify measurable controls.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Enabling Digital Sovereignty</strong>
+          <p>By promoting models such as anonymized data-licensing and Partitioned Intelligence, the Dialogue allows nations to fund and operate their own infrastructure.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>Ultimately, a successful Dialogue rebalances global power. By establishing an "Everything-By-Default" (EBD) standard for safety and auditability, we reduce dependency on a few dominant interests. The result is a world where Sovereignty is the default, and technological progress is no longer synonymous with extraction or dependency.</p>
+  </section>
+
+  <hr>
+
+  <!-- VII -->
+  <section id="added-value">
+    <div class="section-header">
+      <span class="section-number">VII</span>
+      <h2>The Added Value of the Dialogue</h2>
+    </div>
+    <p>The Dialogue should build upon the foundational work of the <strong>ITU AI for Good Global Summit</strong> and the <strong>Independent International Scientific Panel on AI</strong>. It must align with the mandate of General Assembly resolution <strong>A/RES/79/325</strong> to connect existing efforts and identify practical lessons.</p>
+    <p>The unique added value of this Dialogue is its capacity to institutionalize <strong>technological systems of reciprocity.</strong> By utilizing Neutral Party Liaisons to facilitate these systems, the Dialogue can move the global community beyond passive observation toward active, secure data-intelligence exchange. In this framework, one country's data trains another's domain-specific intelligence; consequently, each nation gains a tangible stake in the safety, security, and overall success of the other's systems.</p>
+    <p>Currently, critical tools like medical decision support are treated as consumer conveniences. The Dialogue's added value lies in redefining these as <strong>Digital Public Infrastructure (DPI).</strong> By adopting Stateless-by-Design protocols, such as the Bauta Valve, the Dialogue ensures that this reciprocity is mathematically secure, making patient/citizen PII leakage impossible while promoting interoperability.</p>
+    <p>Furthermore, by connecting these technical standards with modernized, andragogical technical education (the Flux Hall model), the Dialogue ensures that "Human Oversight" is backed by the competence required to manage these systems. This shifts the global dynamic from hegemonic dependency to a network of autonomous, technically-literate peers.</p>
+  </section>
+
+  <hr>
+
+  <!-- VIII -->
+  <section id="multi-stakeholder">
+    <div class="section-header">
+      <span class="section-number">VIII</span>
+      <h2>Multi-Stakeholder Considerations</h2>
+    </div>
+    <p>We recommend moving away from "Consensus-by-Exhaustion" models toward <strong>Multi-Objective Decision Analysis (MODA)</strong> and <strong>Multi-Actor Multi-Criteria Analysis (MAMCA).</strong> The current four-tiered "funnel" structure often filters out minority technical truths in favor of high-level jargon. Instead, the Dialogue should employ a <strong>Grid Model of Technical Reciprocity.</strong></p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">1</div>
+        <div class="item-body">
+          <strong>Mapping Friction via MODA</strong>
+          <p>Rather than seeking a single "agreed-upon" recommendation, the Dialogue should produce a Sensitivity Map. This map visualizes the mathematical trade-offs between speed, scale, and safety. By weight-tracking agreements without betraying individual participants, MODA allows "ground truth" to remain visible even when it conflicts with the aggressive scaling interests of dominant actors.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">2</div>
+        <div class="item-body">
+          <strong>Neutral Party Synthesis</strong>
+          <p>We propose the use of Neutral Party Liaisons — technical intermediaries focused strictly on science and handling — to moderate breakouts. These parties facilitate systems where one nation's data can train another's intelligence securely, creating a vested interest in mutual success.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">3</div>
+        <div class="item-body">
+          <strong>Everything-By-Default (EBD) Sandboxes</strong>
+          <p>Structure thematic sessions as "stress-test sandboxes" where proposed governance approaches are measured against a baseline of Architectural Enforcement. If a proposal cannot meet the EBD floor for auditability and clinical safety, its "weight" in the final summary is mathematically adjusted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- IX -->
+  <section id="underrepresented">
+    <div class="section-header">
+      <span class="section-number">IX</span>
+      <h2>Underrepresented Voices</h2>
+    </div>
+    <p>We identify three critical groups currently muffled by the "policy funnel":</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Ground-Truth Practitioners</strong>
+          <p>The 400,000+ physicians and subspecialists currently utilizing consumer-grade AI for diagnostics. Their clinical reality — where accuracy drops to 34–41% in complex reasoning — is rarely represented in "high-level" ethics discussions.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Localized Sovereignty Developers</strong>
+          <p>Independent innovators from the Global South (e.g., participants of the 2026 India AI Impact Summit) who are building domain-specific models for agriculture and medicine. Their perspective on Digital Sovereignty is vital to counteracting the current "Data Gluttony" paradigm.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>The Distrustful Citizenry</strong>
+          <p>In regions where up to 80% of the population does not trust their government with personal data, the perspective of the "unrepresented end-user" is paramount.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>To include them, we must move beyond symbolic representation. We propose a <strong>Ground Truth Audit</strong> where these stakeholders are invited to stress-test proposed governance frameworks against their specific technical and ethical frictions. Inclusion must be an architectural requirement, not a side event.</p>
+  </section>
+
+  <hr>
+
+  <!-- X -->
+  <section id="innovative">
+    <div class="section-header">
+      <span class="section-number">X</span>
+      <h2>Innovative Engagement</h2>
+    </div>
+    <p>We propose three innovative formats to foster genuine technical reciprocity:</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">1</div>
+        <div class="item-body">
+          <strong>Digital Delegate Simulations</strong>
+          <p>Each participating entity — Government or Stakeholder — can utilize Open Source models to train a "Digital Delegate" on their specific policy constraints, cultural nuances, and technical requirements. These delegates can engage in high-speed, background negotiations during the Dialogue, surfacing areas of alignment that might take months for human counterparts to identify.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">2</div>
+        <div class="item-body">
+          <strong>Real-Time Alignment Visualization (The Reciprocity Grid)</strong>
+          <p>Using MODA tools, the Dialogue should provide real-time visualization of shared weights and agreements. This allows a small, developing nation to see that their technical safety standards are 80–100% aligned with those of a major power, even if they remain anonymous. This "Reciprocity Grid" builds Citizen Trust by proving that logic and "Ground Truth" create bridges where geopolitical names might create walls.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">3</div>
+        <div class="item-body">
+          <strong>Protocol War-Gaming</strong>
+          <p>Rather than panels, we suggest "Sandboxes" where proposed governance standards, like the Bauta Valve, are live-tested. Participants are tasked with finding PII leaks or clinical hallucinations within a stateless architecture. This shifts the focus from "Policy Promises" to Architectural Enforcement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- XI -->
+  <section id="solutions">
+    <div class="section-header">
+      <span class="section-number">XI</span>
+      <h2>Concrete Solutions to Address the Challenges</h2>
+    </div>
+    <p>We advocate for moving beyond "Soft Governance" toward Architectural Enforcement through six scalable practices and platforms:</p>
+
+    <div class="item-list">
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Stateless-by-Design Infrastructure</strong>
+          <p>This privacy and security protocol mandates a total memory-wipe between data batches. By ensuring Zero-Persistence, the retention or leakage of patient/citizen PII becomes mathematically impossible, moving privacy from a policy promise to a technical mandate.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Partitioned/Moded Intelligence (Arête Techne)</strong>
+          <p>To bridge the "Domain Integrity Gap" where generalist engines show accuracy as low as 34% in Life Critical domains, we utilize strictly partitioned, mission-specific architecture. Our Fieldwise training protocols on moded/partitioned systems ensure fidelity in practice.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Technical Literacy Minimums (TLM)</strong>
+          <p>"Robust human oversight" is an illusion without competence. We employ an andragogical framework to certify oversight bodies in identifying measurable technical controls, such as Deterministic Remediation Protocols and Automated System Integrity Gates.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Legacy Modernization</strong>
+          <p>A multi-phase systems engineering strategy designed to transition fragmented, heterogeneous infrastructure into a unified "Living Lab." The framework establishes a "Secure by Default" foundation, utilizing Zero Trust Network Architecture and a unified data ontology, to ensure every technological addition is interoperable and sustainable from the outset.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Sovereign Reciprocity Mechanisms</strong>
+          <p>We propose the use of Neutral Party Liaisons to facilitate anonymized data-licensing. This empowers nations to fund their own infrastructure while establishing a "Scientific Commons" where one country's data securely trains another's intelligence.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">—</div>
+        <div class="item-body">
+          <strong>Everything-By-Default (EBD) Standard</strong>
+          <p>By establishing an EBD standard, we ensure that safety, privacy, and clinical/domain accuracy are non-negotiable architectural prerequisites for any public-facing technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Hitherto AI &nbsp;·&nbsp; Flux Hall Academy &nbsp;·&nbsp; Fathom Lab</p>
+  <p style="margin-top:0.5rem"><a href="https://www.hithertoai.org">hithertoai.org</a> &nbsp;·&nbsp; <a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a></p>
+  <p style="margin-top:0.5rem; opacity:0.45">Position Paper for the 2026 Global Dialogue on Artificial Intelligence Governance · Geneva, July 2026</p>
+</footer>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / max * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
