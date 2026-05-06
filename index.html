@@ -1,759 +1,938 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sovereignty as an Architectural Choice — 2026 Global Dialogue on AI Governance</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --crimson: #8B1A1A;
-      --crimson-light: #A52020;
-      --crimson-dark: #5C1010;
-      --ink: #1a1410;
-      --parchment: #F4F0E8;
-      --parchment-dark: #E8E3D8;
-      --warm-white: #FAF8F4;
-      --rule: #C8BFB0;
-      --accent-bar: 4px solid var(--crimson);
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Beyond Connectivity — R. Verity Vabolis</title>
+<meta name="description" content="A Technical Brief on Community-Owned, Self-Funding Digital Infrastructure for School Modernization in the Rural Global South. R. Verity Vabolis, Hitherto AI, May 2026."/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --primary: #7e0016;
+    --primary-fixed: #ffdad8;
+    --on-primary: #ffffff;
+    --secondary: #4f6073;
+    --surface: #fbf9f8;
+    --surface-container-low: #f6f3f2;
+    --surface-container: #f0eded;
+    --surface-container-high: #eae8e7;
+    --surface-container-lowest: #ffffff;
+    --on-surface: #1b1c1c;
+    --on-surface-variant: #594140;
+    --outline: #8d706f;
+    --outline-variant: #e1bebd;
+    --background: #fbf9f8;
+    --sidebar-width: 240px;
+    --header-height: 56px;
+  }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
-    html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Newsreader', Georgia, serif;
+    background: var(--background);
+    color: var(--on-surface);
+    font-size: 20px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    body {
-      font-family: 'IBM Plex Sans', sans-serif;
-      background-color: var(--warm-white);
-      color: var(--ink);
-      font-size: 17px;
-      line-height: 1.75;
-    }
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    font-size: 17px;
+    vertical-align: middle;
+    user-select: none;
+    line-height: 1;
+    flex-shrink: 0;
+  }
 
-    /* ── HERO ── */
-    .hero {
-      background-color: var(--crimson-dark);
-      color: var(--parchment);
-      padding: 5rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 60px,
-        rgba(255,255,255,0.025) 60px,
-        rgba(255,255,255,0.025) 61px
-      );
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 780px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .hero-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(244,240,232,0.55);
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 900;
-      line-height: 1.1;
-      color: var(--parchment);
-      margin-bottom: 1.2rem;
-    }
-    .hero-sub {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: rgba(244,240,232,0.75);
-      max-width: 600px;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      border-left: 3px solid rgba(244,240,232,0.3);
-      padding-left: 1.2rem;
-    }
-    .hero-meta {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .hero-meta-item {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      color: rgba(244,240,232,0.55);
-    }
-    .hero-meta-item strong {
-      display: block;
-      color: var(--parchment);
-      font-size: 0.9rem;
-      margin-bottom: 0.15rem;
-    }
+  /* HEADER */
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-height);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    background: rgba(251,249,248,0.97);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--outline-variant);
+  }
 
-    /* ── LAYOUT ── */
-    .content-wrap {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
+  .header-brand-area {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+    border-right: 1px solid var(--outline-variant);
+    height: 100%;
+  }
 
-    /* ── NAV / TOC ── */
-    .toc {
-      background: var(--parchment);
-      border-left: var(--accent-bar);
-      padding: 2rem 2.5rem;
-      margin: 3.5rem 0;
-    }
-    .toc-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      margin-bottom: 1rem;
-    }
-    .toc ol {
-      list-style: none;
-      counter-reset: toc-counter;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.4rem 2rem;
-    }
-    @media (max-width: 560px) { .toc ol { grid-template-columns: 1fr; } }
-    .toc li {
-      counter-increment: toc-counter;
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-    }
-    .toc li::before {
-      content: counter(toc-counter, upper-roman);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--crimson);
-      flex-shrink: 0;
-    }
-    .toc a {
-      font-size: 0.88rem;
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--rule);
-      transition: color 0.2s;
-    }
-    .toc a:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
+  .header-brand {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
 
-    /* ── SECTIONS ── */
-    section {
-      margin: 4rem 0;
-      animation: fadeUp 0.5s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
 
-    .section-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-    .section-number {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      color: var(--crimson);
-      text-transform: uppercase;
-      padding-top: 0.55rem;
-      flex-shrink: 0;
-      writing-mode: vertical-lr;
-      transform: rotate(180deg);
-    }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 3vw, 1.9rem);
-      font-weight: 700;
-      color: var(--crimson-dark);
-      line-height: 1.2;
-      border-bottom: 2px solid var(--parchment-dark);
-      padding-bottom: 0.5rem;
-    }
+  .header-meta span {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--outline);
+    font-weight: 500;
+  }
 
-    p { margin-bottom: 1.1rem; color: #2a2420; }
+  .header-meta a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+  .header-meta a:hover { color: var(--primary); }
 
-    /* ── CALLOUT BOXES ── */
-    .callout {
-      border-left: var(--accent-bar);
-      background: var(--parchment);
-      padding: 1.4rem 1.8rem;
-      margin: 2rem 0;
-    }
-    .callout-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      margin-bottom: 0.6rem;
-    }
-    .callout p { margin-bottom: 0; font-size: 0.95rem; }
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background: var(--surface);
+    border-right: 1px solid var(--outline-variant);
+    overflow-y: auto;
+    padding: 1.25rem 0 3rem;
+    z-index: 100;
+  }
 
-    /* ── NUMBERED ITEMS ── */
-    .item-list { margin: 1.5rem 0; }
-    .item {
-      display: grid;
-      grid-template-columns: 2.5rem 1fr;
-      gap: 0 1rem;
-      margin-bottom: 1.5rem;
-      align-items: start;
-    }
-    .item-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--parchment-dark);
-      line-height: 1;
-      padding-top: 0.15rem;
-      text-align: right;
-    }
-    .item-body strong {
-      display: block;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-weight: 500;
-      color: var(--crimson-dark);
-      margin-bottom: 0.3rem;
-    }
-    .item-body p { margin-bottom: 0; font-size: 0.95rem; }
+  .sidebar-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--outline);
+    padding: 0.75rem 1.25rem 0.3rem;
+  }
 
-    /* ── PILL TAGS ── */
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1.5rem 0;
-    }
-    .tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      background: var(--crimson-dark);
-      color: var(--parchment);
-      padding: 0.25rem 0.75rem;
-      border-radius: 2px;
-    }
+  .sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 1.25rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.12s;
+    line-height: 1.3;
+  }
 
-    /* ── STAT HIGHLIGHT ── */
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1px;
-      background: var(--parchment-dark);
-      margin: 2rem 0;
-      border: 1px solid var(--parchment-dark);
-    }
-    .stat {
-      background: var(--warm-white);
-      padding: 1.4rem;
-      text-align: center;
-    }
-    .stat-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--crimson);
-      display: block;
-    }
-    .stat-desc {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 0.3rem;
-    }
+  .sidebar nav a:hover {
+    background: var(--surface-container);
+    color: var(--on-surface);
+    border-left-color: var(--outline-variant);
+  }
 
-    /* ── DIVIDER ── */
-    hr {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 3rem 0;
-    }
+  .sidebar nav a.active {
+    background: rgba(126,0,22,0.05);
+    color: var(--primary);
+    border-left-color: var(--primary);
+    font-weight: 700;
+  }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--crimson-dark);
-      color: rgba(244,240,232,0.6);
-      padding: 2.5rem 2rem;
-      text-align: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-    }
-    footer a { color: rgba(244,240,232,0.8); text-decoration: none; }
-    footer a:hover { color: var(--parchment); }
+  .sidebar-rule {
+    height: 1px;
+    background: var(--outline-variant);
+    margin: 0.5rem 1.25rem;
+  }
 
-    /* ── SCROLL PROGRESS ── */
-    #progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 3px;
-      background: var(--crimson);
-      width: 0%;
-      z-index: 999;
-      transition: width 0.1s linear;
-    }
+  /* LAYOUT */
+  .page-wrap {
+    margin-left: var(--sidebar-width);
+    padding-top: var(--header-height);
+  }
 
-    @media print {
-      #progress { display: none; }
-      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    }
-  </style>
+  /* COVER */
+  .cover {
+    padding: 3rem 3rem 2.5rem;
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+    max-width: 860px;
+  }
+
+  .cover-eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .cover h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(32px, 3.5vw, 50px);
+    font-weight: 800;
+    color: var(--on-surface);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+  }
+
+  .cover-subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--on-surface-variant);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    max-width: 600px;
+  }
+
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--outline-variant);
+    margin-bottom: 2rem;
+  }
+
+  .cover-meta-item dt {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--outline);
+    margin-bottom: 2px;
+  }
+
+  .cover-meta-item dd {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-surface);
+  }
+
+  .cover-meta-item dd a { color: var(--primary); text-decoration: none; }
+
+  .cover-intro {
+    max-width: 680px;
+  }
+
+  .cover-intro p {
+    font-family: 'Newsreader', serif;
+    font-size: 17px;
+    color: var(--on-surface-variant);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .cover-intro p:last-child { margin-bottom: 0; }
+
+  /* MANUSCRIPT */
+  .manuscript {
+    max-width: 860px;
+    padding: 2rem 3rem 5rem;
+  }
+
+  /* PROSE */
+  .section {
+    padding-top: 3.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .section-eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--outline);
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--on-surface);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--surface-container-high);
+  }
+
+  h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin: 2rem 0 0.6rem;
+    letter-spacing: -0.005em;
+  }
+
+  h4 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--on-surface-variant);
+  }
+
+  p strong { color: var(--on-surface); font-weight: 600; }
+
+  ul, ol {
+    margin: 0.75rem 0 1.25rem;
+    color: var(--on-surface-variant);
+  }
+
+  ul { list-style: none; padding-left: 0; }
+
+  ul li {
+    padding-left: 1.4rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  ul li::before {
+    content: '■';
+    position: absolute; left: 0;
+    color: var(--secondary);
+    font-size: 0.58em;
+    top: 0.45em;
+  }
+
+  ol { list-style: decimal; padding-left: 1.4rem; }
+  ol li { margin-bottom: 0.75rem; }
+
+  a { color: var(--primary); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .callout {
+    background: rgba(126,0,22,0.03);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .callout-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--primary);
+    margin-bottom: 0.4rem;
+  }
+
+  .callout p, .callout li {
+    font-size: 16.5px;
+    color: var(--on-surface);
+    margin-bottom: 0.5rem;
+  }
+  .callout p:last-child, .callout li:last-child { margin-bottom: 0; }
+  .callout ul { margin: 0.4rem 0 0; }
+
+  .principle-intro {
+    background: rgba(126,0,22,0.04);
+    border: 1px solid rgba(126,0,22,0.18);
+    border-radius: 5px;
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .principle-intro p {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 17.5px;
+    color: var(--on-surface);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  .vendor-questions {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0;
+    counter-reset: vq;
+  }
+
+  .vendor-questions li {
+    counter-increment: vq;
+    padding: 0.85rem 1rem 0.85rem 2.9rem;
+    position: relative;
+    border: 1px solid var(--outline-variant);
+    border-radius: 4px;
+    margin-bottom: 0.55rem;
+    background: var(--surface-container-lowest);
+    font-family: 'Newsreader', serif;
+    font-size: 16px;
+    color: var(--on-surface-variant);
+    line-height: 1.5;
+  }
+
+  .vendor-questions li::before {
+    content: counter(vq);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.85rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--primary-fixed);
+    width: 19px; height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+  }
+
+  .spec-table th {
+    background: var(--surface-container-high);
+    color: var(--on-surface);
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: left;
+    border: 1px solid var(--outline-variant);
+  }
+
+  .spec-table td {
+    padding: 9px 12px;
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .spec-table tr:nth-child(even) td {
+    background: var(--surface-container-low);
+  }
+
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--surface-container-high);
+    margin: 0;
+  }
+
+  .ref-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0;
+  }
+
+  .ref-list li {
+    font-family: 'Newsreader', serif;
+    font-size: 16px;
+    color: var(--on-surface-variant);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--surface-container-high);
+    line-height: 1.5;
+  }
+  .ref-list li:last-child { border-bottom: none; }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--surface-container);
+    border-top: 1px solid var(--outline-variant);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    margin-bottom: 3px;
+  }
+
+  .footer-copy {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    color: var(--secondary);
+  }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  .footer-links a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--primary); }
+</style>
 </head>
 <body>
 
-<div id="progress"></div>
-
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-inner">
-    <p class="hero-label">Position Paper &nbsp;·&nbsp; 2026 Global Dialogue on AI Governance &nbsp;·&nbsp; Geneva, July 2026</p>
-    <h1>Sovereignty as an<br>Architectural Choice</h1>
-    <p class="hero-sub">Replacing policy-heavy 'finger-wagging' with the technical teeth of architectural enforcement to secure global sovereignty, clinical integrity, and shared reciprocity in the AI era.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <strong>Author</strong>
-        R. Verity Vabolis
-      </div>
-      <div class="hero-meta-item">
-        <strong>Organisation</strong>
-        Hitherto AI · Flux Hall Academy · Fathom Lab
-      </div>
-      <div class="hero-meta-item">
-        <strong>Contact</strong>
-        <a href="mailto:verity@hithertoai.org" style="color:rgba(244,240,232,0.75)">verity@hithertoai.org</a>
-      </div>
-    </div>
+<header class="site-header">
+  <div class="header-brand-area">
+    <a class="header-brand" href="#">Beyond Connectivity</a>
+  </div>
+  <div class="header-meta">
+    <span>R. Verity Vabolis &nbsp;·&nbsp; May 2026</span>
+    <a href="https://hithertoai.org" target="_blank" rel="noopener">hithertoai.org</a>
+    <a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a>
   </div>
 </header>
 
-<main class="content-wrap">
-
-  <!-- TOC -->
-  <nav class="toc" aria-label="Table of contents">
-    <p class="toc-title">Contents</p>
-    <ol>
-      <li><a href="#exec-summary">Executive Summary</a></li>
-      <li><a href="#successful-dialogue">What is a Successful Dialogue?</a></li>
-      <li><a href="#narrowing-priorities">Narrowing Priorities</a></li>
-      <li><a href="#emerging-issues">Emerging Issues at Hand</a></li>
-      <li><a href="#impact">Impact of Governance Proper</a></li>
-      <li><a href="#impact2">Impact of Governance Proper (cont.)</a></li>
-      <li><a href="#added-value">The Added Value of the Dialogue</a></li>
-      <li><a href="#multi-stakeholder">Multi-Stakeholder Considerations</a></li>
-      <li><a href="#underrepresented">Underrepresented Voices</a></li>
-      <li><a href="#innovative">Innovative Engagement</a></li>
-      <li><a href="#solutions">Concrete Solutions</a></li>
-    </ol>
+<aside class="sidebar">
+  <div class="sidebar-label">Overview</div>
+  <nav>
+    <a href="#cover"><span class="material-symbols-outlined">article</span>About This Brief</a>
   </nav>
+  <div class="sidebar-rule"></div>
+  <div class="sidebar-label">Introduction</div>
+  <nav>
+    <a href="#intro"><span class="material-symbols-outlined">info</span>1. Introduction</a>
+  </nav>
+  <div class="sidebar-rule"></div>
+  <div class="sidebar-label">Four Principles</div>
+  <nav>
+    <a href="#principle1"><span class="material-symbols-outlined">account_balance</span>2. Community Ownership</a>
+    <a href="#principle2"><span class="material-symbols-outlined">payments</span>3. Self-Funding</a>
+    <a href="#principle3"><span class="material-symbols-outlined">account_tree</span>4. Architectural Enforcement</a>
+    <a href="#principle4"><span class="material-symbols-outlined">handshake</span>5. Reciprocity</a>
+  </nav>
+  <div class="sidebar-rule"></div>
+  <div class="sidebar-label">Technical</div>
+  <nav>
+    <a href="#addendum"><span class="material-symbols-outlined">terminal</span>6. Technical Addendum</a>
+    <a href="#conclusion"><span class="material-symbols-outlined">flag</span>7. Conclusion</a>
+    <a href="#references"><span class="material-symbols-outlined">menu_book</span>References</a>
+  </nav>
+</aside>
 
-  <!-- I -->
-  <section id="exec-summary">
-    <div class="section-header">
-      <span class="section-number">I</span>
-      <h2>Executive Summary</h2>
+<div class="page-wrap">
+
+  <div class="cover" id="cover">
+    <p class="cover-eyebrow">Technical Brief &nbsp;·&nbsp; May 2026</p>
+    <h1>Beyond Connectivity</h1>
+    <p class="cover-subtitle">A Technical Brief on Community-Owned, Self-Funding Digital Infrastructure for School Modernization in the Rural Global South</p>
+    <dl class="cover-meta">
+      <div class="cover-meta-item"><dt>Author</dt><dd>R. Verity Vabolis</dd></div>
+      <div class="cover-meta-item"><dt>Organization</dt><dd><a href="https://hithertoai.org" target="_blank" rel="noopener">Hitherto AI</a></dd></div>
+      <div class="cover-meta-item"><dt>Contact</dt><dd><a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a></dd></div>
+      <div class="cover-meta-item"><dt>Published</dt><dd>May 2026</dd></div>
+      <div class="cover-meta-item"><dt>License</dt><dd>Public Domain</dd></div>
+    </dl>
+    <div class="cover-intro">
+      <p>The effort to connect every school to the internet is among the most ambitious infrastructure undertakings of the current era. Connectivity, however, is a starting point, not a finish line. A school that is connected to the internet but dependent on proprietary hardware, locked into a single vendor's ecosystem, or generating data that is harvested without consent or compensation has not been modernized. It has been plugged into an extractive system by different means.</p>
+      <p>This brief addresses what comes after the connection is live: who owns the infrastructure, how it is funded, and what architectural standards must be in place to ensure that no harm reaches the child. The answers draw on existing, deployed technologies that have been built and tested in the regions where they would be applied. None require a single vendor. None require external debt. None require permission from any authority that would withhold it.</p>
+      <p>The frameworks, specifications and reference implementations described here are placed in the public domain and may be used, adapted and deployed by any government, multilateral institution or community organization without attribution, payment or permission.</p>
     </div>
-    <p>Current international AI governance efforts frequently stall at the level of high-level ethics and "policy promises." This position paper advocates for a paradigm shift toward <strong>Architectural Enforcement</strong> — the embedding of safety, privacy, and sovereignty directly into the technical fabric of AI infrastructure.</p>
-    <p>By moving away from subjective "finger-wagging" and toward objective, measurable technical controls, we can ensure that the rapid evolution of digital technologies supports human rights and international law by default.</p>
-    <div class="tags">
-      <span class="tag">Architectural Enforcement</span>
-      <span class="tag">Digital Sovereignty</span>
-      <span class="tag">Stateless-by-Design</span>
-      <span class="tag">Partitioned Intelligence</span>
-      <span class="tag">Technical Literacy Minimums</span>
-    </div>
-  </section>
+  </div>
 
-  <hr>
+  <div class="manuscript">
 
-  <!-- II -->
-  <section id="successful-dialogue">
-    <div class="section-header">
-      <span class="section-number">II</span>
-      <h2>What is a Successful Dialogue?</h2>
-    </div>
-    <p>To make the first Global Dialogue a success, the outcome must move beyond "governance by vibes" and toward Architectural Enforcement. If we leave Geneva with only a list of high-level principles and no technical blueprints, we haven't governed; we've merely "cosplayed."</p>
-    <p>A successful dialogue would achieve three concrete outcomes:</p>
-
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">01</div>
-        <div class="item-body">
-          <strong>Mandatory Technical Standards for High-Risk Domains</strong>
-          <p>The Dialogue must transition from "Policy Promises" to identifying specific "priority actions." Success means establishing an international commitment to Partitioned Architecture in life-critical sectors like medicine. We must decouple "Medical Truth" from the hallucinations of General Knowledge Models (GKMs) currently used by over 400,000 physicians.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">02</div>
-        <div class="item-body">
-          <strong>Validation of Stateless Infrastructure</strong>
-          <p>A key "practical lesson" would be the adoption of "Stateless-by-Design" protocols, such as the Bauta Valve. By making the retention of patient/citizen PII mathematically impossible, we move privacy from a legal debate to a technical certainty.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">03</div>
-        <div class="item-body">
-          <strong>Sustainable Modernization for the Global South</strong>
-          <p>To truly "bridge AI divides," the Dialogue must validate data-sovereignty models. Success looks like a global framework for anonymized data-licensing, allowing developing nations to fund their own infrastructure rather than relying on external aid.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout">
-      <p class="callout-label">Imperative</p>
-      <p>The Dialogue must mandate Technical Literacy Minimums (TLM) for oversight bodies. "Robust human oversight" is an illusion if the humans in charge cannot define or verify measurable thresholds. We advocate for the mandatory integration of Deterministic Remediation Protocols and Multi-Temporal Performance Baselines as non-negotiable architectural prerequisites.</p>
-    </div>
-  </section>
-
-  <hr>
-
-  <!-- III -->
-  <section id="narrowing-priorities">
-    <div class="section-header">
-      <span class="section-number">III</span>
-      <h2>Narrowing Priorities</h2>
-    </div>
-    <p>In Safe AI and Human Oversight, we advocate for Technical Literacy Minimums (TLM) for the humans tasked with governance. Oversight is an illusion without competence; governance professionals must be equipped to identify and verify measurable controls like Automated System Integrity Gates, Deterministic Remediation Protocols, and Multi-Temporal Performance Baselines — instead of finger pointing and report writing.</p>
-    <p>Through <strong>Flux Hall Academy</strong>, we address Capacity-building by modernizing the delivery of technical education. We advocate for a global shift toward high-engagement, domain-specific learning frameworks that respect the expertise of adult learners. This model moves beyond basic vocabulary to actual system mastery, enabling local stakeholders to manage their own Partitioned/Moded Intelligence systems.</p>
-    <p>Regarding Societal Implications, we focus on bridging the "Integrity Gap" in high-risk domains like medicine. By deploying Stateless-by-Design infrastructure like the Bauta Valve, we ensure that "Medical Truth" is decoupled from the hallucinations of general-purpose engines, protecting both patient safety and cultural context.</p>
-    <p>Finally, we promote <strong>Digital Sovereignty for the Global South.</strong> By combining modernized adult-learning frameworks with anonymized data-licensing, nations can fund and operate their own infrastructure. Our goal is to provide a scalable blueprint for Inclusive Modernization where international cooperation is based on shared technical competence and standard-driven enforcement.</p>
-  </section>
-
-  <hr>
-
-  <!-- IV -->
-  <section id="emerging-issues">
-    <div class="section-header">
-      <span class="section-number">IV</span>
-      <h2>Emerging Issues at Hand</h2>
-    </div>
-    <p>We identify five critical cross-cutting issues that require urgent integration into the Global Dialogue:</p>
-
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">1</div>
-        <div class="item-body">
-          <strong>Minimum Standards for Public-Facing Technology</strong>
-          <p>Current governance is reactive. We must establish "pre-deployment minimums" that ensure any technology reaching the public has passed rigorous, non-optional safety thresholds. Safety cannot be a "feature" added post-launch; it must be an architectural prerequisite.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">2</div>
-        <div class="item-body">
-          <strong>Standards for Certifying Bodies</strong>
-          <p>To eliminate "governance by vibes," we must establish meaningful minimum standards for the entities that certify technology and professionals. A certification is meaningless if the "expert" cannot demonstrate a post-audit methodology or identify technical controls. We propose a move toward Competency-Based Certification for governance practitioners.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">3</div>
-        <div class="item-body">
-          <strong>Diverse Technical Evolution</strong>
-          <p>We must move beyond "Data Gluttony." The current paradigm, focused almost exclusively on Transformers and neural networks, is not the "end-all" of intelligence. Governance must protect and fund research into alternative architectures that do not rely on mass extraction of earth's resources or data.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">4</div>
-        <div class="item-body">
-          <strong>Intentional Scaling (Safety Over Speed)</strong>
-          <p>We advocate for the "Everything-By-Default" (EBD) standard, where safety, privacy, and auditability are non-negotiable defaults rather than optional toggles. This involves a conscious choice to limit speed and scale in favor of clinical and societal safety.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">5</div>
-        <div class="item-body">
-          <strong>Neutral Party Liaisons</strong>
-          <p>We propose the introduction of technical experts who facilitate high-friction cooperation between ministries or nations. These parties focus solely on the science and handling of tech, ensuring that geopolitical friction doesn't stall modernization or safety implementation.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr>
-
-  <!-- V -->
-  <section id="impact">
-    <div class="section-header">
-      <span class="section-number">V</span>
-      <h2>Impact of Governance Proper</h2>
+    <div class="section" id="intro">
+      <div class="section-eyebrow">Section 1</div>
+      <h2>Introduction: Connectivity Is the Starting Point, Not the Finish Line</h2>
+      <p>The effort to connect every school to the internet is among the most ambitious infrastructure undertakings of the current era. Initiatives such as GIGA, a partnership between UNICEF and the International Telecommunication Union, have made measurable progress in mapping school locations, assessing connectivity gaps, and negotiating bulk connectivity agreements with telecommunications providers. This work is necessary. It deserves acknowledgement and support.</p>
+      <p>Connectivity, however, is a starting point, not a finish line. A school that is connected to the internet but dependent on proprietary hardware, locked into a single vendor's ecosystem, or generating data that is harvested without consent or compensation has not been modernized. It has been plugged into an extractive system by different means.</p>
+      <p>This technical brief addresses three questions that arise once the connection is live:</p>
+      <ul>
+        <li>Who owns the infrastructure that delivers digital learning?</li>
+        <li>How is that infrastructure funded, and does the funding model create sovereignty or dependency?</li>
+        <li>What architectural standards must be in place to ensure that no harm reaches the child?</li>
+      </ul>
+      <p>The answers offered here are not theoretical. They draw on existing, deployed technologies: community-owned mesh networks, anonymized data licensing frameworks, and stateless-by-design protocols that have been built and tested in the regions where they would be applied. None require a single vendor. None require external debt. None require permission from any authority that would withhold it.</p>
+      <p>The document is structured around four principles: self-funding through sovereign data assets, beginning with a single strategically chosen data stream; architectural enforcement of safety, privacy and agnosticism; community ownership as a minimum standard; and reciprocity mechanisms that allow communities, counties and regions to federate their infrastructure for mutual support, reducing the burden on national governments and eliminating extraction layers between the resource and the child.</p>
+      <p>This brief is published as a public record and a standing offer. The solutions described exist. They have been built. They are available to any partner, multilateral, governmental or private, prepared to implement them in good faith.</p>
     </div>
 
-    <div class="stat-row">
-      <div class="stat">
-        <span class="stat-value">400K+</span>
-        <p class="stat-desc">Physicians using consumer-grade AI for life-critical diagnostics</p>
+    <hr class="section-rule"/>
+
+    <div class="section" id="principle1">
+      <div class="section-eyebrow">Section 2</div>
+      <h2>Principle One: Community Ownership as a Minimum Standard</h2>
+      <div class="principle-intro">
+        <p>Infrastructure built for schools should be owned by the communities those schools serve. This is not a concession to be negotiated. It is the minimum condition for any intervention that purports to serve the interests of children.</p>
       </div>
-      <div class="stat">
-        <span class="stat-value">34–41%</span>
-        <p class="stat-desc">Accuracy of GKMs in complex clinical reasoning (Stanford/Microsoft)</p>
-      </div>
-      <div class="stat">
-        <span class="stat-value">80%</span>
-        <p class="stat-desc">Population share that distrusts government with personal data in some regions</p>
-      </div>
+
+      <h3>What Community Ownership Means</h3>
+      <p>Community ownership is distinct from community consultation, community benefit or community participation. Consultation asks for input. Benefit promises outcomes. Participation invites involvement. Ownership confers control. A community that owns its school's digital infrastructure can determine how it is used, who may access it, under what terms data may be shared, and whether a vendor's contract is renewed. No external entity can withhold connectivity as leverage. No third party can extract rent from a resource the community itself maintains.</p>
+      <p>This principle is not new. Prior to the disruptions of the colonial period, communities across what is now termed the Global South maintained sophisticated systems of education, knowledge transfer and resource governance. These systems were self-sustaining, adapted to their contexts, and answerable to the people they served. The present condition of educational infrastructure deficit is not a starting point. It is an interruption. Community ownership of digital infrastructure is not an innovation. It is a restoration.</p>
+
+      <h3>The Nexus Mesh Model</h3>
+      <p>Community ownership of connectivity infrastructure is technically achievable with existing, off-the-shelf hardware. One demonstrated model is the nexus mesh: a peer-to-peer wireless network connecting multiple schools or community anchor points without dependence on any single telecommunications provider.</p>
+      <p>The nexus mesh draws on proven implementations, including the wireless mesh networks deployed in Kenya and the Democratic Republic of the Congo through initiatives such as AfriNet. These networks demonstrated that communities can build and maintain their own connectivity infrastructure when provided with appropriate hardware, basic training and the legal standing to operate.</p>
+      <p>A nexus mesh consists of solar-powered edge nodes located at schools or community centres. Each node creates a local network that caches educational content, runs local applications and handles authentication without requiring constant internet connectivity. Synchronization with the broader internet occurs through whatever transport is available: a satellite link, a fibre connection at a central point, or, in the most resource-constrained settings, a portable storage device transported by motorcycle between nodes. This asynchronous-by-design architecture means that a school does not lose functionality when the connection drops. Learning continues. Records remain local. The mesh is resilient by structure, not by contingency.</p>
+      <p>Each node is owned by the school or community that hosts it. The mesh is the sum of these owned pieces cooperating through standard, open protocols. No central provider controls access. No entity can impose fees, throttle bandwidth or monetize usage data. The infrastructure is the community's own, in the same way a community well or a shared solar array is its own.</p>
+
+      <h3>Legal and Regulatory Preconditions</h3>
+      <p>For community-owned infrastructure to function at scale, national governments must establish two enabling conditions.</p>
+      <p>First, communities must have legal standing to own and operate connectivity infrastructure. This may require amendments to telecommunications regulations that currently reserve spectrum access and infrastructure operation to licensed commercial entities. Community spectrum licensing, particularly in television white space frequencies, which are well-suited to the distances and terrain of rural areas, provides a regulatory model that several nations have already adopted or piloted.</p>
+      <p>Second, schools must be recognized as valid sites for infrastructure ownership, distinct from household or commercial premises. A school is a community anchor institution. Its connectivity should be governed accordingly.</p>
+      <p>Neither condition requires significant public expenditure. Both require political will. The return on that will is a connectivity model that costs the national government less over time, not more, because the burden of maintenance and operation is carried by the communities that benefit.</p>
+
+      <h3>The Cost of Vendor Dependency</h3>
+      <p>When infrastructure is owned by a vendor, every decision about that infrastructure passes through a commercial filter. Will the vendor support older hardware, or will it require proprietary upgrades? Will the vendor allow interoperability with other systems, or will it design its products to preclude it? Will the vendor continue to serve a remote community when the contract's margins tighten, or will it withdraw?</p>
+      <p>These are not hypothetical questions. They describe the documented behaviour of technology vendors in education markets globally. The only structural safeguard against these outcomes is ownership. A community that owns its infrastructure cannot have it withdrawn. A community that maintains its infrastructure cannot have access priced beyond its means. A community that governs its infrastructure cannot have its children's data harvested by a distant entity that has never set foot in its school.</p>
+
+      <h3>Standards for Community-Owned Infrastructure</h3>
+      <p>Any infrastructure deployed under this principle should meet the following minimum specifications:</p>
+      <ul>
+        <li><strong>Local governance:</strong> Infrastructure is governed by a transparent community body that includes school leadership, educators, parents and, where age-appropriate, students.</li>
+        <li><strong>Open protocols:</strong> All networking and data exchange uses open, non-proprietary standards, ensuring that no single vendor can control interoperability.</li>
+        <li><strong>Open or auditable firmware:</strong> Any hardware deployed must run firmware that is open-source or available for independent security audit. No proprietary black boxes.</li>
+        <li><strong>Zero extraction:</strong> No data generated by the school or its students may be collected, monetized or shared by any external entity without the explicit, revocable consent of the community governance body, consistent with national law and international standards on children's data protection.</li>
+        <li><strong>Resilience by design:</strong> The infrastructure functions without continuous internet connectivity. Intermittent synchronization is a design condition, not a failure mode.</li>
+      </ul>
     </div>
 
-    <div class="callout">
-      <p class="callout-label">Significant Challenge — The Clinical Integrity Gap</p>
-      <p>Currently, over 400,000 physicians utilize consumer-grade General Knowledge Models (GKMs) for life-critical diagnostics. Research (Stanford/Microsoft) reveals accuracy as low as 34–41% in complex clinical reasoning, despite high USMLE scores. This "Integrity Gap" is a structural failure of current governance: we are treating medical decision-support as a consumer convenience rather than Digital Public Infrastructure (DPI).</p>
-    </div>
+    <hr class="section-rule"/>
 
-    <div class="callout">
-      <p class="callout-label">Significant Opportunity — Architectural Enforcement</p>
-      <p>The most significant advance is the shift toward Architectural Enforcement through Stateless-by-Design protocols and Partitioned Intelligence. By using infrastructure like the Bauta Valve, we can move safety from a policy promise to a technical mandate, ensuring zero-persistence of PII and decoupling "Medical Truth" from generalist hallucinations.</p>
-    </div>
-
-    <div class="callout">
-      <p class="callout-label">Inclusive Modernization and Sovereignty</p>
-      <p>In developing regions, specifically Africa, there is a transformative opportunity for Digital Sovereignty. Rather than relying on external aid or debt, nations can fund their own infrastructure by anonymizing and licensing data. We advocate for an "Everything-By-Default" (EBD) standard where safety and auditability are non-negotiable architectural defaults. In 2026 anything less is an indication of carelessness, laziness, or greed.</p>
-    </div>
-  </section>
-
-  <hr>
-
-  <!-- VI -->
-  <section id="impact2">
-    <div class="section-header">
-      <span class="section-number">VI</span>
-      <h2>Impact of Governance Proper (cont.)</h2>
-    </div>
-    <p>The Global Dialogue must transition international cooperation from high-level rhetoric to Architectural Enforcement. Its most vital role is to catalyze a global shift toward Sovereignty and Autonomy, ensuring that those currently perceived as "behind" can reach parity with those perceived as "ahead."</p>
-    <p>To achieve this, the Dialogue must facilitate three practical pillars:</p>
-
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Institutionalizing Neutral Party Liaisons</strong>
-          <p>By deploying technical intermediaries to reduce friction between nations, the Dialogue ensures that modernization continues based on science and handling, rather than geopolitical agendas. This provides the "connective tissue" for a multipolar technological landscape.</p>
-        </div>
+    <div class="section" id="principle2">
+      <div class="section-eyebrow">Section 3</div>
+      <h2>Principle Two: Self-Funding Through Sovereign Data Assets</h2>
+      <div class="principle-intro">
+        <p>There is an asset already generated daily by millions of children attending school, currently given away without compensation. That asset is language data.</p>
       </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Standardizing Technical Literacy Minimums (TLM)</strong>
-          <p>Robust human oversight is an illusion without competence. The Dialogue should establish minimum competency standards that empower oversight bodies to verify measurable controls.</p>
-        </div>
+
+      <p>Infrastructure requires investment. The conventional mechanisms for financing digital infrastructure in the Global South, sovereign debt, foreign aid and vendor-financed procurement, each carry structural consequences. Debt creates obligations that outlast the infrastructure it funds. Aid is subject to the priorities of the funder, not the recipient. Vendor financing embeds extraction into the operational model from the first day of deployment.</p>
+      <p>There is an alternative. It does not require new taxes, external borrowing or philanthropic generosity. It requires recognizing an asset that already exists, that is generated daily by millions of children attending school, and that is currently given away without compensation. That asset is language data.</p>
+
+      <h3>The Value of Language Data</h3>
+      <p>Global artificial intelligence systems are trained predominantly on English-language data. The world's languages, numbering more than 7,000, the majority spoken in the Global South, are dramatically underrepresented in training corpora. This is not a curiosity. It is a market inefficiency of enormous scale.</p>
+      <p>Technology companies, research institutions and governments investing in AI development require diverse, high-quality language data to build systems that function beyond a narrow set of dominant languages. They require spoken language, written language, signed language. They require it across dialects, age groups and contexts. They require it from authentic speakers engaged in authentic communication: precisely the kind of communication that occurs naturally in classrooms.</p>
+      <p>This data is non-rivalrous. Licensing it does not deplete it. It is renewable, generated continuously through the act of teaching and learning. And it is scarce in the sense that matters to markets: it cannot be synthesized elsewhere. Only the communities that speak, write and sign these languages can produce authentic, representative data.</p>
+      <div class="callout">
+        <div class="callout-label">Current Reality</div>
+        <p>At present, this data is extracted without consent, without compensation and without benefit to the communities that produce it. Platforms that collect user-generated content harvest language data as a by-product of their terms of service. The value flows out. Nothing flows back.</p>
       </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Enabling Digital Sovereignty</strong>
-          <p>By promoting models such as anonymized data-licensing and Partitioned Intelligence, the Dialogue allows nations to fund and operate their own infrastructure.</p>
-        </div>
-      </div>
+
+      <h3>The Educational Data Trust Model</h3>
+      <p>A sovereign Educational Data Trust inverts this flow. The mechanism is straightforward in concept, though it requires careful legal and technical implementation:</p>
+      <ol>
+        <li>A national or regional trust is established by legislation or executive order, with a mandate to govern the anonymization and licensing of educational language data.</li>
+        <li>Schools that participate in the trust contribute anonymized language data, including voice samples, written texts and signed language recordings, collected through the normal course of instruction, with the informed consent of families and educators, and under protocols that ensure no personally identifiable information is ever included.</li>
+        <li>The trust licenses this anonymized data to AI developers, research institutions and other legitimate users under terms set by the trust, not by the licensee. Pricing reflects the market value of the data, not the bargaining position of the community.</li>
+        <li>Revenue from licensing is earmarked by law for educational infrastructure: connectivity hardware, edge nodes, learning devices, teacher training, and the maintenance and expansion of the trust's own operations.</li>
+        <li>The trust is governed by a board that includes educators, community representatives, technical experts and government officials, with transparent public reporting on all licensing agreements and expenditures.</li>
+      </ol>
+      <p>The trust does not sell children's data. It licenses anonymized, aggregated data that cannot be traced back to any individual student. It does not permit the data to be used for surveillance, profiling or commercial targeting. It embeds these prohibitions in the licensing agreement with contractual penalties for violation. The trust is not a vendor. It is a steward of a sovereign asset, accountable to the public whose asset it manages.</p>
+
+      <h3>Why One Data Stream Is Sufficient</h3>
+      <p>A government need not commodify every aspect of education to fund it. A single, strategically chosen data stream can generate revenue sufficient to modernize a national school system, provided three conditions are met.</p>
+      <p>First, the licensing framework must capture fair market value. This requires that nations negotiate collectively where possible, rather than competing against each other to underprice their data. Regional data trusts covering multiple nations with shared language families offer a mechanism for collective bargaining.</p>
+      <p>Second, revenue must be constitutionally or legislatively earmarked for education. Without a legal firewall, licensing revenue will be absorbed into general government expenditure, and the infrastructure it was intended to fund will go unfunded. Earmarking is not a technical detail. It is the mechanism that makes the model self-sustaining.</p>
+      <p>Third, the infrastructure that generates and transmits the data must be community-owned, as described in Principle One. If the infrastructure is vendor-owned, the vendor will extract its own rents, and the revenue that reaches schools will be a fraction of what the data is worth. Community ownership closes the loop. The same infrastructure that delivers curriculum also generates the asset that funds it.</p>
+
+      <h3>Existing Precedents</h3>
+      <p>The Educational Data Trust model is not without precedent. Elements of this approach are already in operation or under active development:</p>
+      <ul>
+        <li><strong>Estonia's X-Road and data governance framework</strong> demonstrates that a sovereign data infrastructure can be built on open standards, with citizens controlling access to their own data and the state providing the governance layer.</li>
+        <li><strong>The Kolibri project (Learning Equality)</strong> demonstrates that educational content and learning data can be managed entirely offline, with peer-to-peer synchronization, on low-cost hardware.</li>
+        <li><strong>Sovereign wealth funds</strong> in several nations have demonstrated that earmarking revenue from a single asset class for specified public purposes is administratively feasible and can operate across electoral cycles when the legal framework is robust.</li>
+        <li><strong>Anonymized data licensing agreements</strong> in health and mobility research have established the legal and contractual architecture for licensing aggregated, non-identifiable data under terms that protect the source population.</li>
+      </ul>
+      <p>None of these precedents is a complete Educational Data Trust. Each provides a component of the model. The task is to assemble the components and adapt them to the educational context.</p>
+
+      <h3>What the Trust Is Not</h3>
+      <p>The Educational Data Trust is not a mechanism for extracting value from children. It is the opposite: a mechanism for preventing extraction by establishing a lawful, transparent, community-governed alternative.</p>
+      <p>It is not a substitute for public investment in education. Governments retain their obligation to fund schools. The trust supplements public expenditure with revenue that would otherwise not exist, earmarked for infrastructure that would otherwise not be built.</p>
+      <p>It is not a gift from the technology sector. It is a commercial transaction in which a willing buyer licenses an asset from a willing seller on terms set by the seller. The fact that the seller has historically given the asset away for free does not oblige it to continue doing so.</p>
     </div>
 
-    <p>Ultimately, a successful Dialogue rebalances global power. By establishing an "Everything-By-Default" (EBD) standard for safety and auditability, we reduce dependency on a few dominant interests. The result is a world where Sovereignty is the default, and technological progress is no longer synonymous with extraction or dependency.</p>
-  </section>
+    <hr class="section-rule"/>
 
-  <hr>
-
-  <!-- VII -->
-  <section id="added-value">
-    <div class="section-header">
-      <span class="section-number">VII</span>
-      <h2>The Added Value of the Dialogue</h2>
-    </div>
-    <p>The Dialogue should build upon the foundational work of the <strong>ITU AI for Good Global Summit</strong> and the <strong>Independent International Scientific Panel on AI</strong>. It must align with the mandate of General Assembly resolution <strong>A/RES/79/325</strong> to connect existing efforts and identify practical lessons.</p>
-    <p>The unique added value of this Dialogue is its capacity to institutionalize <strong>technological systems of reciprocity.</strong> By utilizing Neutral Party Liaisons to facilitate these systems, the Dialogue can move the global community beyond passive observation toward active, secure data-intelligence exchange. In this framework, one country's data trains another's domain-specific intelligence; consequently, each nation gains a tangible stake in the safety, security, and overall success of the other's systems.</p>
-    <p>Currently, critical tools like medical decision support are treated as consumer conveniences. The Dialogue's added value lies in redefining these as <strong>Digital Public Infrastructure (DPI).</strong> By adopting Stateless-by-Design protocols, such as the Bauta Valve, the Dialogue ensures that this reciprocity is mathematically secure, making patient/citizen PII leakage impossible while promoting interoperability.</p>
-    <p>Furthermore, by connecting these technical standards with modernized, andragogical technical education (the Flux Hall model), the Dialogue ensures that "Human Oversight" is backed by the competence required to manage these systems. This shifts the global dynamic from hegemonic dependency to a network of autonomous, technically-literate peers.</p>
-  </section>
-
-  <hr>
-
-  <!-- VIII -->
-  <section id="multi-stakeholder">
-    <div class="section-header">
-      <span class="section-number">VIII</span>
-      <h2>Multi-Stakeholder Considerations</h2>
-    </div>
-    <p>We recommend moving away from "Consensus-by-Exhaustion" models toward <strong>Multi-Objective Decision Analysis (MODA)</strong> and <strong>Multi-Actor Multi-Criteria Analysis (MAMCA).</strong> The current four-tiered "funnel" structure often filters out minority technical truths in favor of high-level jargon. Instead, the Dialogue should employ a <strong>Grid Model of Technical Reciprocity.</strong></p>
-
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">1</div>
-        <div class="item-body">
-          <strong>Mapping Friction via MODA</strong>
-          <p>Rather than seeking a single "agreed-upon" recommendation, the Dialogue should produce a Sensitivity Map. This map visualizes the mathematical trade-offs between speed, scale, and safety. By weight-tracking agreements without betraying individual participants, MODA allows "ground truth" to remain visible even when it conflicts with the aggressive scaling interests of dominant actors.</p>
-        </div>
+    <div class="section" id="principle3">
+      <div class="section-eyebrow">Section 4</div>
+      <h2>Principle Three: Architectural Enforcement in Education</h2>
+      <div class="principle-intro">
+        <p>A policy promise is revocable. A technical control, properly implemented, is not. Safety, privacy and sovereignty must be embedded directly into the technical fabric of infrastructure, not added as an afterthought.</p>
       </div>
-      <div class="item">
-        <div class="item-num">2</div>
-        <div class="item-body">
-          <strong>Neutral Party Synthesis</strong>
-          <p>We propose the use of Neutral Party Liaisons — technical intermediaries focused strictly on science and handling — to moderate breakouts. These parties facilitate systems where one nation's data can train another's intelligence securely, creating a vested interest in mutual success.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">3</div>
-        <div class="item-body">
-          <strong>Everything-By-Default (EBD) Sandboxes</strong>
-          <p>Structure thematic sessions as "stress-test sandboxes" where proposed governance approaches are measured against a baseline of Architectural Enforcement. If a proposal cannot meet the EBD floor for auditability and clinical safety, its "weight" in the final summary is mathematically adjusted.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <hr>
+      <p>The Global Dialogue on AI Governance has called for a paradigm shift from "governance by vibes" to architectural enforcement: the embedding of safety, privacy and sovereignty directly into the technical fabric of infrastructure. This principle applies with particular force to schools. Children are not a test market. Classrooms are not a proving ground for emerging technologies. The standards that govern digital tools in education must be non-negotiable, verifiable and built into the architecture of the tools themselves.</p>
+      <p>The following six standards constitute the minimum architectural requirements for any digital tool deployed in a school, regardless of vendor, regardless of jurisdiction, regardless of funding source. They are drawn from existing, deployed implementations. They are achievable today with off-the-shelf hardware and open-source or freely licensable software. A vendor that cannot meet them is not qualified to serve children.</p>
 
-  <!-- IX -->
-  <section id="underrepresented">
-    <div class="section-header">
-      <span class="section-number">IX</span>
-      <h2>Underrepresented Voices</h2>
-    </div>
-    <p>We identify three critical groups currently muffled by the "policy funnel":</p>
+      <h3>Standard One: Stateless by Design</h3>
+      <p>Any digital tool used in a school must process student data locally, with zero persistence of personally identifiable information in any cloud environment, unless explicit, revocable consent has been obtained from the data subject or their legal guardian, in accordance with national law and the Convention on the Rights of the Child.</p>
+      <p>In practice, this means:</p>
+      <ul>
+        <li>The default processing location is the device in the classroom, not a remote server.</li>
+        <li>Where connectivity is used, data transmitted must be anonymized at source, before it leaves the device.</li>
+        <li>No student data may be stored in a vendor's cloud infrastructure as a condition of the tool's operation.</li>
+        <li>Any consent granted for data processing must be specific, informed and revocable without penalty or loss of service.</li>
+      </ul>
+      <p>Stateless-by-design architecture moves privacy from a legal debate to a technical certainty. It protects children in settings where connectivity is intermittent, where data protection laws are nascent or unenforced, and where the balance of power between a vendor and a family is fundamentally unequal.</p>
 
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Ground-Truth Practitioners</strong>
-          <p>The 400,000+ physicians and subspecialists currently utilizing consumer-grade AI for diagnostics. Their clinical reality — where accuracy drops to 34–41% in complex reasoning — is rarely represented in "high-level" ethics discussions.</p>
-        </div>
+      <h3>Standard Two: No Biometrics on Minors</h3>
+      <p>No biometric data, including facial recognition, fingerprints, iris scans, voice prints or gait analysis, shall be collected, stored or processed from any person under the age of 18 in an educational setting. This prohibition is absolute. It does not admit exceptions for safety, convenience or administrative efficiency.</p>
+      <p>A child's body is not a password. Biometric systems, once deployed in schools, cannot be meaningfully consented to by minors, cannot be effectively opted out of without stigma or exclusion, and create databases of irrevocable identifiers that follow children into adulthood. The security benefits claimed by vendors of these systems are consistently overstated. The risks, including data breach, function creep and the normalization of surveillance as a condition of education, are structural and irreversible.</p>
+      <p>This prohibition applies regardless of whether the biometric processing occurs locally or in the cloud, regardless of the vendor's assurances, and regardless of whether the system has been deployed in other jurisdictions. It is a bright line. Any vendor that proposes biometric systems in schools is disqualified.</p>
+
+      <h3>Standard Three: Hardware and Software Agnosticism</h3>
+      <p>Digital tools must function with any school computer and any compatible peripheral device, not only the hardware sold or approved by the tool's vendor. Software must be fully white-label: it does not display the vendor's brand, logo or product names inside the school environment, unless the school expressly chooses otherwise.</p>
+      <p>Vendor lock-in is not an accident. It is a business model. Proprietary hardware requirements, closed file formats and brand propagation inside schools are designed to make switching costs prohibitive and to extend the vendor's commercial relationship indefinitely. Agnosticism as an architectural standard prevents lock-in before it begins. A school that deploys a digital tool today must be able to replace it tomorrow without losing access to its data, its hardware or its instructional continuity.</p>
+      <p>This standard applies to every vendor without exception, including any entity associated with the authors of this brief. Software agnosticism is not optional. The tool must serve the school. The school must not advertise the tool.</p>
+
+      <h3>Standard Four: Local Processing, Zero Extraction</h3>
+      <p>All student data must be processed locally on school-owned or community-owned devices. No student data may be used for training vendor AI models, for commercial profiling, for targeted advertising or for any purpose other than the direct educational function of the tool. No student intellectual property, including creative work, written assignments or project outputs, may be licensed, sold or incorporated into a vendor's training corpus without the explicit, compensated consent of the student or their legal guardian.</p>
+      <div class="callout">
+        <div class="callout-label">The Free Tool Pattern</div>
+        <p>This standard addresses a documented pattern: education technology vendors that offer "free" tools in exchange for data rights buried in terms of service. The tools are not free. The price is the data. The transaction is obscured. Local processing as an architectural default makes extraction technically impossible, regardless of what the terms of service claim or omit.</p>
       </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Localized Sovereignty Developers</strong>
-          <p>Independent innovators from the Global South (e.g., participants of the 2026 India AI Impact Summit) who are building domain-specific models for agriculture and medicine. Their perspective on Digital Sovereignty is vital to counteracting the current "Data Gluttony" paradigm.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>The Distrustful Citizenry</strong>
-          <p>In regions where up to 80% of the population does not trust their government with personal data, the perspective of the "unrepresented end-user" is paramount.</p>
-        </div>
+
+      <h3>Standard Five: Open or Auditable Code</h3>
+      <p>Any software deployed in a school must be open-source or available for independent security audit by a qualified third party selected by the procuring authority. Proprietary black boxes have no place in educational infrastructure.</p>
+      <p>This is not an ideological position. It is a practical one. Schools cannot verify what proprietary software does with student data. They cannot confirm that it meets the standards described above. They cannot detect whether it has been altered, whether it contains vulnerabilities or whether it is transmitting data to parties unknown. Auditability is the mechanism that makes all other standards enforceable. Without it, standards are trust. With it, standards are verification.</p>
+
+      <h3>Standard Six: Training Before Deployment</h3>
+      <p>No digital tool shall be activated in a classroom until educators, administrators and, where age-appropriate, students have received role-specific, sustained training on its use, its limitations and the rights and protections associated with it. Training is not an afterthought. It is not a one-time orientation session. It is a prerequisite to deployment.</p>
+      <p>A tool placed in a classroom without trained adults is not a learning intervention. It is an experiment. The adults responsible for children must understand what the tool does, what it does not do, what data it processes, where that data resides and what to do when something goes wrong. Training must be ongoing, updated as tools evolve, and delivered in the language of instruction.</p>
+      <div class="callout">
+        <div class="callout-label">These Standards Are Not Aspirational</div>
+        <p>Each of the six standards described above has been implemented in working systems. Stateless-by-design protocols are in operation in secure communications infrastructure. Local processing of AI models runs on devices powered by five watts of electricity. Open-source educational platforms serve millions of learners without extracting their data. Training before deployment is standard practice in every profession that takes harm prevention seriously: medicine, aviation, engineering. Education should be no different.</p>
       </div>
     </div>
 
-    <p>To include them, we must move beyond symbolic representation. We propose a <strong>Ground Truth Audit</strong> where these stakeholders are invited to stress-test proposed governance frameworks against their specific technical and ethical frictions. Inclusion must be an architectural requirement, not a side event.</p>
-  </section>
+    <hr class="section-rule"/>
 
-  <hr>
+    <div class="section" id="principle4">
+      <div class="section-eyebrow">Section 5</div>
+      <h2>Principle Four: Reciprocity Mechanisms for Mutual Support</h2>
+      <div class="principle-intro">
+        <p>Communities federate their infrastructure for mutual support under agreed protocols: horizontal exchanges between equal parties, with no extraction layer, no vendor intermediation and no dependency created that cannot be unwound.</p>
+      </div>
 
-  <!-- X -->
-  <section id="innovative">
-    <div class="section-header">
-      <span class="section-number">X</span>
-      <h2>Innovative Engagement</h2>
+      <p>A community that owns its infrastructure and funds it through sovereign data assets is already more resilient than one dependent on vendors, debt or aid. But no community is an island. Schools exist within counties, counties within regions, regions within nations. The connectivity, compute power and technical expertise available to one community will differ from that available to its neighbour. Mechanisms that allow communities to share what they have, voluntarily, transparently and without creating new dependencies, extend the benefits of the model to those who would otherwise go without.</p>
+
+      <h3>The Reciprocity Principle</h3>
+      <p>Reciprocity, in this context, means that communities federate their infrastructure for mutual support under agreed protocols. A community with surplus connectivity shares bandwidth with a community that lacks it. A school with underutilized compute capacity on its edge node makes that capacity available to a neighbouring school during off-peak hours. A region that has trained technical personnel lends that expertise to a neighbouring region while it builds its own capacity.</p>
+      <p>These arrangements are not charity. They are not aid. They are horizontal exchanges between equal parties, governed by transparent agreements that either party can exit without penalty. If one community has more than it needs and another has less, the surplus should flow to the need; not as a gift that creates obligation, but as a shared investment in a system that benefits all participants.</p>
+
+      <h3>How Reciprocity Mechanisms Function</h3>
+      <p>A reciprocity agreement between communities requires three elements.</p>
+      <p><strong>Technical interoperability.</strong> Community-owned infrastructure built on open protocols is, by design, interoperable with other infrastructure built on the same protocols. A nexus mesh node in one school can communicate with a node in a neighbouring school without proprietary translation layers, without vendor intermediation and without fees. The technical standards described in Principle Three, specifically hardware agnosticism, open or auditable code and stateless-by-design architecture, are the same standards that make federation possible.</p>
+      <p><strong>Transparent governance.</strong> Reciprocity arrangements must be governed by written agreements that specify what is shared, under what conditions, for what duration, and with what process for amendment or termination. The agreements must be public documents, accessible to the communities they affect, and subject to periodic review. Obscurity creates suspicion. Transparency builds trust.</p>
+      <p><strong>Mutual benefit.</strong> A reciprocity arrangement that consistently benefits one party at the expense of the other is not reciprocity. It is extraction by another name. Agreements should be structured so that over time, each participating community both contributes and receives. The contribution need not be identical; one community may contribute bandwidth while another contributes maintenance labour. But the balance must be recognizably mutual.</p>
+
+      <h3>The Subsidiarity Effect</h3>
+      <p>When communities can meet their own needs through mutual support, the burden on higher levels of government diminishes. A national education ministry that does not need to fund, procure and maintain connectivity for every school can direct its resources to functions that only a central authority can perform: setting curriculum standards, accrediting teachers, ensuring equity across regions, and maintaining the legal and regulatory framework within which community-owned infrastructure operates.</p>
+      <p>This is subsidiarity in practice: the principle that decisions and resources should reside at the most local level capable of managing them effectively. A community can manage its own connectivity. A county can coordinate reciprocity between its communities. A region can maintain the edge infrastructure that requires scale. The national government can set the standards and enforce the protections. Each level does what it is best positioned to do, and no level is burdened with responsibilities that properly belong elsewhere.</p>
+
+      <h3>What Reciprocity Is Not</h3>
+      <p>Reciprocity is not a substitute for public investment. Governments retain the obligation to fund education and to ensure that every child, regardless of location, has access to a school that meets minimum standards. Reciprocity reduces the cost of meeting that obligation. It does not eliminate the obligation.</p>
+      <p>Reciprocity is not a mechanism for offloading government responsibility onto communities that cannot bear it. A community that lacks the resources to build its own infrastructure cannot be told to rely on the generosity of its neighbour and left to manage as best it can. The national government retains a duty to address structural inequities between regions. Reciprocity handles the margins. Equity requires the centre.</p>
+      <p>Reciprocity is not a vendor relationship by other means. A community that shares bandwidth with a neighbour is not selling a service. It is participating in a mutual aid arrangement that either party can exit. There is no contract that locks in terms. There is no extraction of profit. There is no dependency created that cannot be unwound.</p>
+
+      <h3>The Federation Trajectory</h3>
+      <p>A single school with a nexus mesh node is a proof of concept. Two schools sharing bandwidth are a pilot. Twenty schools across a county, federated by reciprocity agreements, with a shared Educational Data Trust generating revenue that funds maintenance and expansion: that is a system.</p>
+      <p>The trajectory from proof of concept to system does not require central planning. It requires standards, legal frameworks and a few working examples that others can adapt. Communities learn from communities. A reciprocity agreement that works in one county is copied in the next. A governance structure that proves effective in one region is adopted by its neighbour. The role of national government is to enable this diffusion, not to direct it; to set the rules, enforce the protections, and then step back.</p>
     </div>
-    <p>We propose three innovative formats to foster genuine technical reciprocity:</p>
 
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">1</div>
-        <div class="item-body">
-          <strong>Digital Delegate Simulations</strong>
-          <p>Each participating entity — Government or Stakeholder — can utilize Open Source models to train a "Digital Delegate" on their specific policy constraints, cultural nuances, and technical requirements. These delegates can engage in high-speed, background negotiations during the Dialogue, surfacing areas of alignment that might take months for human counterparts to identify.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">2</div>
-        <div class="item-body">
-          <strong>Real-Time Alignment Visualization (The Reciprocity Grid)</strong>
-          <p>Using MODA tools, the Dialogue should provide real-time visualization of shared weights and agreements. This allows a small, developing nation to see that their technical safety standards are 80–100% aligned with those of a major power, even if they remain anonymous. This "Reciprocity Grid" builds Citizen Trust by proving that logic and "Ground Truth" create bridges where geopolitical names might create walls.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">3</div>
-        <div class="item-body">
-          <strong>Protocol War-Gaming</strong>
-          <p>Rather than panels, we suggest "Sandboxes" where proposed governance standards, like the Bauta Valve, are live-tested. Participants are tasked with finding PII leaks or clinical hallucinations within a stateless architecture. This shifts the focus from "Policy Promises" to Architectural Enforcement.</p>
-        </div>
-      </div>
+    <hr class="section-rule"/>
+
+    <div class="section" id="addendum">
+      <div class="section-eyebrow">Section 6</div>
+      <h2>Technical Addendum: Specifications for Procurement and Partnership</h2>
+      <p>This addendum provides practical guidance for governments, multilateral institutions and other duty-bearers responsible for procuring digital infrastructure for schools. It is not exhaustive. It is a baseline. Any procurement that does not meet these specifications should be reconsidered.</p>
+
+      <h3>6.1 Minimum Specifications: Connectivity Infrastructure</h3>
+      <table class="spec-table">
+        <thead>
+          <tr><th style="width:30%">Requirement</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Power Independence</strong></td>
+            <td>Infrastructure must operate on solar power with battery storage sufficient for continuous operation during school hours and a minimum of four hours beyond. Grid dependency is a failure point. Solar is a requirement in any setting where power supply is unreliable, which is to say the majority of rural settings in the Global South.</td>
+          </tr>
+          <tr>
+            <td><strong>Asynchronous Operation</strong></td>
+            <td>Infrastructure must provide full local functionality, including content delivery, learning management, assessment and data collection, without continuous internet connectivity. Synchronization must occur through standard protocols that accommodate intermittent connections, including peer-to-peer transfer via portable storage media.</td>
+          </tr>
+          <tr>
+            <td><strong>Open Networking Standards</strong></td>
+            <td>All wireless communication must use open, non-proprietary protocols (e.g., IEEE 802.11 standards for local networking). Proprietary networking protocols that require vendor-specific hardware to extend or maintain the network are not acceptable.</td>
+          </tr>
+          <tr>
+            <td><strong>Auditable Firmware</strong></td>
+            <td>All firmware must be open-source or available for independent security audit. The procuring authority retains the right to commission an audit at any time, at its own discretion, by an auditor of its own selection.</td>
+          </tr>
+          <tr>
+            <td><strong>Modular Hardware</strong></td>
+            <td>Components must be replaceable with off-the-shelf equivalents. No single component may be designed such that its failure requires replacement of the entire unit or procurement from a single supplier.</td>
+          </tr>
+          <tr>
+            <td><strong>Physical Durability</strong></td>
+            <td>Hardware must be rated for the environmental conditions of the deployment site, including temperature, humidity and dust exposure. A vendor that ships hardware designed for air-conditioned server rooms to schools without reliable electricity has not solved a problem. It has created one.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>6.2 Minimum Specifications: Software and Digital Tools</h3>
+      <ul>
+        <li><strong>Local processing default:</strong> Software must process all student data locally on the school device. Cloud processing is permissible only for functions that cannot technically be performed locally, and only when no personally identifiable information is transmitted, the cloud processing architecture is documented and auditable, and the procuring authority has approved the exception in writing.</li>
+        <li><strong>Data export capability:</strong> Any software tool must allow students and educators to export all their data, including learning records, creative work and assessment results, in a non-proprietary, human-readable format, at any time, without penalty or loss of functionality.</li>
+        <li><strong>White-label requirement:</strong> Software must not display the vendor's brand, logo, product name or AI model name in any interface visible to students, unless the procuring authority has explicitly requested branded display. The tool serves the school. The school does not advertise the tool.</li>
+        <li><strong>Accessibility:</strong> Software must meet Web Content Accessibility Guidelines (WCAG) 2.1 Level AA at minimum. Accessibility is not an add-on feature. It is a design condition.</li>
+        <li><strong>Language of instruction:</strong> Software must support the language or languages of instruction used in the procuring school. A vendor that ships English-only tools to schools where instruction occurs in Kiswahili, Amharic or Quechua is not serving those schools.</li>
+      </ul>
+
+      <h3>6.3 Questions for Every Vendor</h3>
+      <p>The following questions should be put to any vendor or implementing partner. A vendor that hesitates, deflects or answers "no" to any of these questions should not be considered qualified. The procuring authority is not obligated to accept an inferior system because a vendor has an appealing presentation.</p>
+      <ol class="vendor-questions">
+        <li>Does your system process student data locally, with zero persistence of personally identifiable information in any cloud environment, without explicit, revocable consent?</li>
+        <li>Is your hardware agnostic, meaning it works with any school computer and any compatible peripheral device, not only your own?</li>
+        <li>Can your software be fully white-labelled so that it does not display your company name, brand or product names inside our schools?</li>
+        <li>Does deployment require training for educators and administrators before the tool is activated, not after?</li>
+        <li>Does your system work entirely without biometrics: no facial recognition, no fingerprints, no iris scans, no voice prints, no exceptions for minors?</li>
+        <li>Is your code open-source or available for independent audit by an auditor of our selection, at our discretion?</li>
+        <li>If your system collects anonymized data, does the licensing framework ensure that revenue from that data flows to the community that generated it, not to the vendor?</li>
+        <li>Does your infrastructure allow community ownership, or does your business model require that you retain ownership of deployed hardware?</li>
+        <li>Can your system operate without continuous internet connectivity, providing full functionality offline and synchronizing when a connection becomes available?</li>
+        <li>Will you provide, in writing, a commitment that no student data will be used to train your proprietary AI models, now or in the future, under any terms of service?</li>
+      </ol>
+
+      <h3>6.4 A Note on a Related Infrastructure Offer</h3>
+      <p>In addition to the frameworks described in this brief, the author has developed a backend infrastructure solution for identifying and disrupting child trafficking and labour exploitation networks. The solution was submitted to relevant authorities in 2023 and was declined on procedural grounds unrelated to its technical merit, specifically the nationality of its author.</p>
+      <p>The solution remains available, at no cost, to any legitimate implementing body, public, multilateral or private, prepared to deploy it in good faith. It is mentioned here not as a grievance but as a standing offer. The protection of children from exploitation is too urgent to be delayed by administrative theatre. The door remains open.</p>
+
+      <h3>6.5 Reference Implementations</h3>
+      <p>The following projects and initiatives demonstrate components of the architecture described in this brief. They are cited as evidence that the specifications above are technically achievable, not as endorsements of any particular implementer.</p>
+      <ul>
+        <li><strong>AfriNet and community wireless mesh networks (Kenya, Democratic Republic of the Congo):</strong> Demonstrated that community-owned wireless mesh networks can provide reliable connectivity in rural and peri-urban settings without dependence on commercial telecommunications providers.</li>
+        <li><strong>The Kolibri project, Learning Equality:</strong> An open-source platform that delivers educational content and assessment entirely offline, with peer-to-peer synchronization, running on low-cost hardware including repurposed servers and single-board computers.</li>
+        <li><strong>Estonia's X-Road:</strong> A sovereign data exchange layer that enables secure, consent-based sharing of data across public and private systems, demonstrating that stateless-by-design architecture can operate at national scale.</li>
+        <li><strong>Eneza Education:</strong> An SMS and USSD-based learning platform that functions on any feature phone, demonstrating that educational technology can be hardware-agnostic and accessible on the devices students and families already own.</li>
+        <li><strong>The Bauta Valve protocol:</strong> A stateless-by-design communication standard that makes interception mathematically impossible, demonstrating that privacy can be embedded in architecture rather than asserted in policy.</li>
+      </ul>
     </div>
-  </section>
 
-  <hr>
+    <hr class="section-rule"/>
 
-  <!-- XI -->
-  <section id="solutions">
-    <div class="section-header">
-      <span class="section-number">XI</span>
-      <h2>Concrete Solutions to Address the Challenges</h2>
+    <div class="section" id="conclusion">
+      <div class="section-eyebrow">Section 7</div>
+      <h2>Conclusion: The Offer</h2>
+      <p>The solutions described in this brief exist. They have been built, tested and in several cases deployed at scale. They do not require new inventions, new materials or new scientific breakthroughs. They require only the willingness to implement what is already possible.</p>
+
+      <h3>What Has Been Presented</h3>
+      <ul>
+        <li><strong>Community ownership as a minimum standard, not a distant aspiration.</strong> Infrastructure built for schools belongs to the communities those schools serve. The nexus mesh model, drawing on proven implementations across the African continent, demonstrates that community-owned connectivity is technically feasible, economically sustainable and legally achievable when national governments establish the enabling conditions.</li>
+        <li><strong>Self-funding through sovereign data assets, beginning with a single, strategically chosen revenue stream.</strong> Language data for artificial intelligence training and development is a renewable, non-rivalrous asset generated daily in classrooms across the Global South. A sovereign Educational Data Trust that licenses this data under terms set by the community, with revenue earmarked by law for school infrastructure, transforms a resource that is currently extracted without compensation into an engine of self-sustaining modernization.</li>
+        <li><strong>Architectural enforcement of six non-negotiable standards:</strong> stateless by design, no biometrics on minors, hardware and software agnosticism, local processing with zero extraction, open or auditable code, and training before deployment. These standards are achievable today. They are not aspirational. A vendor that cannot meet them is not qualified to serve children.</li>
+        <li><strong>Reciprocity mechanisms that allow communities to federate their infrastructure for mutual support,</strong> reducing the burden on national governments and ensuring that surplus capacity in one community reaches the needs of another. No extraction layer. No vendor intermediation. No dependency created that cannot be unwound.</li>
+      </ul>
+
+      <h3>What Is Not Being Asked</h3>
+      <p>This brief does not ask for funding. It does not ask for debt relief. It does not ask for preferential treatment in procurement. It does not ask for a seat at any table that is not willingly offered.</p>
+      <p>What it asks is simpler: that the institutions and governments entrusted with the welfare of children consider the evidence, evaluate the specifications and act on what they find. If the model described here is sound, and it is testable by any party with the technical competence to evaluate it, then the question is not whether it can be done. The question is whether it will be.</p>
+
+      <h3>What Is Being Offered</h3>
+      <p>The frameworks, specifications and reference implementations described in this brief are placed in the public domain. They may be used, adapted and deployed by any government, multilateral institution or community organization without attribution, without payment and without permission.</p>
+      <p>In addition, the author offers the following:</p>
+      <ul>
+        <li>Technical consultation, at no cost, to any government or legitimate implementing body seeking to evaluate or deploy the models described in this brief.</li>
+        <li>The backend infrastructure solution for child trafficking and labour exploitation, described in Section 6.4, to any entity prepared to implement it.</li>
+        <li>A willingness to partner, collaborate or simply advise, as circumstances warrant and as capacity permits.</li>
+      </ul>
+      <p>None of these offers is contingent on employment, contract or institutional affiliation. They are made in good faith, to any party that shares the objective of modernizing educational infrastructure without extraction, without dependency and without harm to children.</p>
+
+      <h3>A Final Word</h3>
+      <p>The nations of the Global South are not poor because they lack resources. They are poor because the mechanisms by which resources are converted into prosperity have, for centuries, been controlled by forces external to them. Colonization extracted physical wealth. Structural adjustment extracted fiscal sovereignty. Data extraction, in its current form, extracts the raw material of the next economy: language, culture, knowledge, without consent, without compensation and without leaving behind the infrastructure that would make further extraction unnecessary.</p>
+      <p>This is not a natural state of affairs. It is a produced condition. And what has been produced can be unmade and remade differently.</p>
+      <p>Every day, millions of children walk into schools across the Global South. They speak. They write. They sign. They learn. They generate, simply by being present, an asset of extraordinary value. That asset currently flows outward, enriching those who already have more than enough.</p>
+      <p>It could, instead, flow to the children who produce it: building the schools they learn in, powering the devices they use, training the teachers who guide them, and funding the next school in the next community and the next after that.</p>
+      <p>The mechanism exists. The architecture is specified. The offer is on the table.</p>
+      <p><strong>The only remaining question is who will take it up.</strong></p>
     </div>
-    <p>We advocate for moving beyond "Soft Governance" toward Architectural Enforcement through six scalable practices and platforms:</p>
 
-    <div class="item-list">
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Stateless-by-Design Infrastructure</strong>
-          <p>This privacy and security protocol mandates a total memory-wipe between data batches. By ensuring Zero-Persistence, the retention or leakage of patient/citizen PII becomes mathematically impossible, moving privacy from a policy promise to a technical mandate.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Partitioned/Moded Intelligence (Arête Techne)</strong>
-          <p>To bridge the "Domain Integrity Gap" where generalist engines show accuracy as low as 34% in Life Critical domains, we utilize strictly partitioned, mission-specific architecture. Our Fieldwise training protocols on moded/partitioned systems ensure fidelity in practice.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Technical Literacy Minimums (TLM)</strong>
-          <p>"Robust human oversight" is an illusion without competence. We employ an andragogical framework to certify oversight bodies in identifying measurable technical controls, such as Deterministic Remediation Protocols and Automated System Integrity Gates.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Legacy Modernization</strong>
-          <p>A multi-phase systems engineering strategy designed to transition fragmented, heterogeneous infrastructure into a unified "Living Lab." The framework establishes a "Secure by Default" foundation, utilizing Zero Trust Network Architecture and a unified data ontology, to ensure every technological addition is interoperable and sustainable from the outset.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Sovereign Reciprocity Mechanisms</strong>
-          <p>We propose the use of Neutral Party Liaisons to facilitate anonymized data-licensing. This empowers nations to fund their own infrastructure while establishing a "Scientific Commons" where one country's data securely trains another's intelligence.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-num">—</div>
-        <div class="item-body">
-          <strong>Everything-By-Default (EBD) Standard</strong>
-          <p>By establishing an EBD standard, we ensure that safety, privacy, and clinical/domain accuracy are non-negotiable architectural prerequisites for any public-facing technology.</p>
-        </div>
-      </div>
+    <hr class="section-rule"/>
+
+    <div class="section" id="references">
+      <div class="section-eyebrow">References</div>
+      <h2>References</h2>
+      <ul class="ref-list">
+        <li>Afrinet Communications. Afrinet Holdings. <a href="https://afrinetholdings.com/afrinet-communications/" target="_blank" rel="noopener">afrinetholdings.com/afrinet-communications/</a></li>
+        <li>Learning Equality. Kolibri: Our Impact. <a href="https://learningequality.org/impact/our-impact/" target="_blank" rel="noopener">learningequality.org/impact/our-impact/</a></li>
+        <li>Nortal. (2025). Why digital sovereignty matters and how X-Road makes it happen. <a href="https://nortal.com/insights/why-digital-sovereignty-matters-and-how-x-road-makes-it-happen" target="_blank" rel="noopener">nortal.com</a></li>
+        <li>IDP Foundation. (2023). Eneza Education. <a href="https://www.idpfoundation.org/partners/eneza-education/" target="_blank" rel="noopener">idpfoundation.org/partners/eneza-education/</a></li>
+      </ul>
+
+      <h3>Author's Note</h3>
+      <p>This brief was prepared as a contribution to the ongoing discourse on sustainable educational infrastructure in the Global South. It draws on the author's experience in digital public infrastructure, the modernization frameworks previously advocated for schools in the United States, and the position submitted to the Global Dialogue on AI Governance.</p>
+      <p>The author holds degrees in communications and has worked for several years on initiatives aligned with the Sustainable Development Goals. This brief is published as a public resource. It is not commissioned, not remunerated, and not submitted on behalf of any organization. The offer it describes is made in a personal capacity and in good faith.</p>
+      <p>Contact: <a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a> &nbsp;·&nbsp; <a href="https://hithertoai.org" target="_blank" rel="noopener">hithertoai.org</a></p>
     </div>
-  </section>
 
-</main>
+  </div>
 
-<footer>
-  <p>Hitherto AI &nbsp;·&nbsp; Flux Hall Academy &nbsp;·&nbsp; Fathom Lab</p>
-  <p style="margin-top:0.5rem"><a href="https://www.hithertoai.org">hithertoai.org</a> &nbsp;·&nbsp; <a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a></p>
-  <p style="margin-top:0.5rem; opacity:0.45">Position Paper for the 2026 Global Dialogue on Artificial Intelligence Governance · Geneva, July 2026</p>
-</footer>
+  <footer class="site-footer">
+    <div>
+      <div class="footer-brand">Beyond Connectivity</div>
+      <div class="footer-copy">© 2026 R. Verity Vabolis / Hitherto AI. Public Domain.</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://hithertoai.org" target="_blank" rel="noopener">hithertoai.org</a>
+      <a href="mailto:verity@hithertoai.org">verity@hithertoai.org</a>
+    </div>
+  </footer>
+
+</div>
 
 <script>
-  const bar = document.getElementById('progress');
-  window.addEventListener('scroll', () => {
-    const max = document.body.scrollHeight - window.innerHeight;
-    bar.style.width = (window.scrollY / max * 100) + '%';
-  });
-</script>
+  const anchors = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
 
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+
+  anchors.forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
